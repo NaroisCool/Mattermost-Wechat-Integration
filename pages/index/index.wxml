@@ -1,0 +1,14 @@
+<!--index.wxml-->
+<!-- <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0,viewport-fit=cover">
+    <title>WeUI</title>
+    <link rel="stylesheet" href="https://weui.io/weui.css">
+</head> -->
+<view class="container">
+  <!-- <view class='logo'>
+    <image mode="widthFix" style="width:150px" src="https://www.falinwa.com/web/image/res.company/1/logo?unique=dc1d713"></image>
+  </view> -->
+    <button class="weui-btn basic blue" open-type="getUserInfo" lang="zh_CN" bindgetuserinfo="onGotUserInfo">Contact Us</button>
+    <button class="weui-btn basic green" bindtap="toFalinwa">Falinwa Website</button>
+</view>

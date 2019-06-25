@@ -1,0 +1,7 @@
+<!--pages/out/out.wxml-->
+<view wx:if="{{out_mm_url}}">
+  <web-view src='{{out_mm_url}}' binderror="onWebViewError"></web-view>
+</view>
+<view wx:else>
+  <navigator url="../index/index"></navigator>
+</view>
