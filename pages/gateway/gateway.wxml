@@ -1,0 +1,9 @@
+<!--index.wxml-->
+<view class="container">
+  <view class="userinfo">
+    <view class="userinfo-avatar">
+      <open-data type="userAvatarUrl" ></open-data>
+    </view>
+    <button wx:if="{{!hasUserInfo && canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo">点击授权应用</button>
+  </view>
+</view>

@@ -7,16 +7,23 @@
 }
 
 .basic {
+  border-radius: 5px;
+  padding: 10px;
+  font-size: 1.2em;
+  max-height: 60px;
   margin-left: 5px;
   margin-right: 5px;
   height: 80px;
+  text-align: left;
   color: white;
 }
+
 .basic.blue {
-  background-color: rgba(0, 68, 255, 0.651);
+  background-color: rgb(17, 83, 171);
 }
-.basic.green {
-  background-color: rgba(43, 255, 0, 0.562);
+
+.basic.purple {
+  background-color: #875a7b;
 }
 
 .userinfo-avatar {
@@ -32,4 +39,12 @@
 
 .usermotto {
   margin-top: 200px;
+}
+
+.footer {
+  position: fixed;
+  bottom: 0;
+  display: flex;
+  width: 100%;
+  justify-content: center;
 }

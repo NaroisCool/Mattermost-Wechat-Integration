@@ -1,5 +1,3 @@
-//index.js
-//获取应用实例
 const app = getApp()
 
 Page({
@@ -8,77 +6,47 @@ Page({
     hasUserInfo: false,
     canIUse: wx.canIUse('button.open-type.getUserInfo')
   },
-  onGotUserInfo: function (e) {
-    wx.login({
-      success: function (data) {
-        console.log('获取登录 Code：' + data.code)
-        
-        app.globalData.mm_url = "https://m.falinwa.cn/wechat?code=" + data.code + "&info=" + encodeURIComponent(JSON.stringify(e)) +"#wechat_redirect";
-        console.log(app.globalData.mm_url)
-        wx.navigateTo({
-          url: '../outer/mm/out',
-          success: function() {
-          },      
-        fail: function() {},        
-        complete: function() {}
-        })
-      },
-      fail: function () {
-        console('登录获取Code失败！');
-      }
-    });
-    console.log(e.detail.errMsg);
-    console.log(e.detail.userInfo);
-    console.log(e.detail.rawData);
-
-  },
-  onLoad: function () {
-    
-    if (app.globalData.userInfo) {
+  onShow: function() {
+    var user_info = wx.getStorageSync("user_info")
+    if (user_info) {
+      console.log('user_info')
+      console.log(user_info)
       this.setData({
-        userInfo: app.globalData.userInfo,
+        userInfo: user_info,
         hasUserInfo: true
       })
-    } else if (this.data.canIUse){
-      app.userInfoReadyCallback = res => {
-        this.setData({
-          userInfo: res.userInfo,
-          hasUserInfo: true
-        })
-      }
     } else {
-      // 在没有 open-type=getUserInfo 版本的兼容处理
-      wx.getUserInfo({
-        success: res => {
-          app.globalData.userInfo = res.userInfo
-          this.setData({
-            userInfo: res.userInfo,
-            hasUserInfo: true
-          })
-        }
+      console.log('redirect....')
+      wx.redirectTo({
+        url: '/pages/gateway/gateway',
       })
     }
   },
-  getUserInfo: function(e) {
-    console.log(e)
-    app.globalData.userInfo = e.detail.userInfo
+
+  onReady: function() {
+    var info_e = wx.getStorageSync("e")
+    console.log('e')
+    console.log(info_e)
+    wx.login({
+      success: function(data) {
+        console.log('获取登录 Code：' + data.code)
+        var mm_url = "https://m.falinwa.cn/wechat?code=" + data.code + "&info=" + encodeURIComponent(JSON.stringify(info_e)) + "#wechat_redirect"
+        console.log(mm_url)
+        wx.setStorageSync('mm_url', mm_url)
+      },
+      fail: function() {
+        console('登录获取Code失败！');
+      }
+    })
+    var mm_url = wx.getStorageSync("mm_url")
+    console.log('mm_url')
+    console.log(mm_url)
     this.setData({
-      userInfo: e.detail.userInfo,
-      hasUserInfo: true
+      'out_mm_url': mm_url
+    })
+    console.log("out page data:" + JSON.stringify(this.data))
+    wx.showShareMenu({
+      withShareTicket: true
     })
   },
-  toFalinwa:function(){
-      wx.redirectTo({
-        url: '../outer/falinwa/falinwa',
-      })
-  },
-  onPullDownRefresh: function () {
-    //显示顶部刷新图标
-    wx.showNavigationBarLoading();
-    this.onLoad();
-    //隐藏导航栏加载框
-    wx.hideNavigationBarLoading();
-    //停止下拉事件
-    wx.stopPullDownRefresh();
-  }
 })

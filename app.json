@@ -1,6 +1,7 @@
 {
   "pages": [
     "pages/index/index",
+    "pages/gateway/gateway",
     "pages/outer/mm/out",
     "pages/outer/falinwa/falinwa"
   ],
