@@ -7,6 +7,11 @@ Page({
     canIUse: wx.canIUse('button.open-type.getUserInfo')
   },
   onLoad: function() {
+    wx.login({
+      success:function(data){
+        wx.setStorageSync('jscode', data.code)
+      }
+    })
     var user_info = wx.getStorageSync("user_info")
     if (user_info) {
       wx.redirectTo({
@@ -34,16 +39,13 @@ Page({
       })
     }
   },
-  getUserInfo: function(e) {
-    wx.setStorageSync('user_info', e.detail.userInfo);
+  getPhoneNumber: function(e) {
+    wx.setStorageSync('user_info', e.detail.encryptedData);
     wx.setStorageSync('e', e);
-    var user_info = wx.getStorageSync("user_info")
-    if (e.detail.userInfo){
-      app.globalData.userInfo = e.detail.userInfo;
-      console.log('app.globalData.userInfo') 
-      console.log(app.globalData.userInfo) 
+    var userInfo = wx.getStorageSync('user_info')
+    if (userInfo){
       this.setData({
-        userInfo: e.detail.userInfo,
+        userInfo: userInfo,
         hasUserInfo: true
       });
       wx.redirectTo({

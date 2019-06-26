@@ -24,23 +24,26 @@ Page({
   },
 
   onReady: function() {
-    var info_e = wx.getStorageSync("e")
-    console.log('e')
-    console.log(info_e)
-    wx.login({
-      success: function(data) {
-        console.log('获取登录 Code：' + data.code)
-        var mm_url = "https://m.falinwa.cn/wechat?code=" + data.code + "&info=" + encodeURIComponent(JSON.stringify(info_e)) + "#wechat_redirect"
-        console.log(mm_url)
-        wx.setStorageSync('mm_url', mm_url)
-      },
-      fail: function() {
-        console('登录获取Code失败！');
-      }
-    })
-    var mm_url = wx.getStorageSync("mm_url")
+    var infoFull = wx.getStorageSync("e")
+    var jscode = wx.getStorageSync("jscode")
+    console.log('jscode & infoFull')
+    console.log(infoFull)
+    console.log(jscode)
+    var mm_url = "https://m.falinwa.cn/wechat?code=" + jscode + "&info=" + encodeURIComponent(JSON.stringify(infoFull)) + "#wechat_redirect"
     console.log('mm_url')
     console.log(mm_url)
+    wx.setStorageSync('mm_url', mm_url)
+    // wx.login({
+    //   success: function(data) {
+    //     console.log('获取登录 Code：' + data.code)
+    //     var mm_url = "https://m.falinwa.cn/wechat?code=" + data.code + "&info=" + encodeURIComponent(JSON.stringify(info_e)) + "#wechat_redirect"
+    //     console.log(mm_url)
+    //     wx.setStorageSync('mm_url', mm_url)
+    //   },
+    //   fail: function() {
+    //     console('登录获取Code失败！');
+    //   }
+    // })
     this.setData({
       'out_mm_url': mm_url
     })
